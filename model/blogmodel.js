@@ -7,7 +7,7 @@ var blogschema=new schema({
     subtitle:{
         type : String
     },
-    title:{
+    description:{
         type : String
     },
 })

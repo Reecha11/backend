@@ -4,8 +4,13 @@ const Blog = require("./model/blogmodel")
 var app= express()
 app.use (express.json())
 DatabaseConnect()
+var cors=require('cors')
 
 //hello
+app.use (cors({
+    origin:"http://localhost:5173"
+}))
+
 
 app.get("/",(req,res)=>{
     res.send("hello world")
@@ -25,7 +30,7 @@ app.post ("/blog",async function (req,res){
         subtitle: subtitle,
         description :description
      })
-     res.json({
+     res.status (200).json({
         message: "blog created sucessfully"
      })
 
@@ -33,7 +38,7 @@ app.post ("/blog",async function (req,res){
 
 app.get ("/blog",async function(req,res) {
     var blogs=await Blog.find()
-    res.json({
+    res.status (200).json({
         data:blogs
     })
     
@@ -43,7 +48,7 @@ app.get("/blog/:id",async function(req,res){
 
    var id= req.params.id
      var blogs= await Blog.findById(id)
-     res.json({
+     res.status (200).json({
         data: blogs
      })
 })
@@ -51,7 +56,7 @@ app.get("/blog/:id",async function(req,res){
 app.delete("/blog/:id",async function(req,res){
     var id= req.params.id
      await Blog.findByIdAndDelete(id)
-     res.json({
+     res.status (200).json({
         message:"blogs deleted sucessfully"
      })
 
@@ -65,7 +70,7 @@ app.patch("/blog/:id", async function(req,res){
         subtitle,
         description
     })
-    res.json({
+    res.status (200).json({
         message:"blog updated sucessfully"
     })
 })
